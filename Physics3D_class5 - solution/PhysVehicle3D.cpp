@@ -26,7 +26,7 @@ void PhysVehicle3D::Render()
 	Cylinder wheel;
 
 	wheel.color = Red;
-
+	
 	for(int i = 0; i < vehicle->getNumWheels(); ++i)
 	{
 		wheel.radius = info.wheels[0].radius;
@@ -40,6 +40,8 @@ void PhysVehicle3D::Render()
 
 	Cube chassis(info.chassis_size.x, info.chassis_size.y, info.chassis_size.z);
 	vehicle->getChassisWorldTransform().getOpenGLMatrix(&chassis.transform);
+	chassis.color = Blue;
+	
 	btQuaternion q = vehicle->getChassisWorldTransform().getRotation();
 	btVector3 offset(info.chassis_offset.x, info.chassis_offset.y, info.chassis_offset.z);
 	offset = offset.rotate(q.getAxis(), q.getAngle());
