@@ -259,7 +259,6 @@ Plane::Plane(float x, float y, float z, float d) : Primitive(), normal(x, y, z),
 
 void Plane::InnerRender() const
 {
-	glLineWidth(1.0f);
 
 	glBegin(GL_POLYGON);
 	glNormal3f(0.0f, 0.0f, 1.0f);

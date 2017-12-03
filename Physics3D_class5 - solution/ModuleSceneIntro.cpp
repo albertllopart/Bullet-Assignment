@@ -38,10 +38,31 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = false;
 	p.Render();
 
+	//ColorLinearCircuit(vec3(7.5, 8, 104));
+
+	Cube ramp_up(22, 2, 46);
+	ramp_up.color = White;
+	ramp_up.SetPos(5, 0, 69.5);
+	ramp_up.SetRotation(-15, vec3(1, 0, 0));
+	ramp_up.Render();
+
+
+	Cube ramp_down(22, 2, 46);
+	ramp_down.color = White;
+	ramp_down.SetPos(5, 0, 138);
+	ramp_down.SetRotation(15, vec3(1, 0, 0));
+	ramp_down.Render();
+
+	Cube roof(22, 2, 25);
+	roof.color = White;
+	roof.SetPos(5, 6, 104);
+	roof.Render();
+
 	return UPDATE_CONTINUE;
 }
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+
 }
 
