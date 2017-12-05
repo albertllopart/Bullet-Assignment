@@ -117,35 +117,27 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
-			if (vehicle->GetKmh() < -3)
-				brake = BRAKE_POWER;
-
-			else
-				acceleration = MAX_ACCELERATION;
-		}
-	if(App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+		if (vehicle->GetKmh() < -3)
+			brake = BRAKE_POWER;
+		else
+			acceleration = MAX_ACCELERATION;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{
-		if(turn < TURN_DEGREES)
-			turn +=  TURN_DEGREES;
+		if (turn < TURN_DEGREES)
+			turn += TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
 	{
-		if(turn > -TURN_DEGREES)
+		if (turn > -TURN_DEGREES)
 			turn -= TURN_DEGREES;
 	}
 
-	if(App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
 	{
 		if (vehicle->GetKmh()>5)
-		{
 			brake = BRAKE_POWER;
-			/*if (back.Read_sec() > 1.0f) back.Start();
-			if (back.Read_sec() == 0.0f)
-			{
-				back.Start();
-				}*/
-		}
 		else
 			acceleration = REVERSE;
 	}
@@ -160,9 +152,8 @@ update_status ModulePlayer::Update(float dt)
 	sprintf_s(title, "%.1f Km/h", vehicle->GetKmh());
 	App->window->SetTitle(title);
 
-	
+
 	return UPDATE_CONTINUE;
 }
-
 
 

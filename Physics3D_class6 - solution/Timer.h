@@ -13,8 +13,6 @@ public:
 
 	void Start();
 	void Stop();
-	void Reset();
-	float Read_sec();
 
 	Uint32 Read();
 
