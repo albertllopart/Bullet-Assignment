@@ -3,6 +3,7 @@
 #include "ModuleSceneIntro.h"
 #include "Primitive.h"
 #include "PhysBody3D.h"
+#include "PhysVehicle3D.h"
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
@@ -78,6 +79,10 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	sensor->GetTransform(&s.transform);
 	s.Render();
+
+	char title[150];
+	sprintf_s(title, "%.1f Km/h ", App->player->vehicle->GetKmh());
+	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
 }
