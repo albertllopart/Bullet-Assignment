@@ -111,6 +111,47 @@ update_status ModuleSceneIntro::Update(float dt)
 	wall4.SetPos(0, 0, 310);
 	wall4.Render();
 
+	//interior walls
+	Cube wall5(10, 10, 220);
+	wall5.SetPos(-110, 0, 155);
+	wall5.Render();
+
+	Cube wall6(10, 10, 220);
+	wall6.SetPos(110, 0, 155);
+	wall6.Render();
+
+	Cube wall7(80, 10, 10);
+	wall7.SetPos(65, 0, 50);
+	wall7.Render();
+
+	Cube wall8(40, 10, 10);
+	wall8.SetPos(-85, 0, 50);
+	wall8.Render();
+
+	Cube wall9(10, 10, 50);
+	wall9.SetPos(-15, 0, 30);
+	wall9.Render();
+
+	Cube wall10(10, 10, 100);
+	wall10.SetPos(30, 0, 255);
+	wall10.Render();
+
+	Cube wall11(95, 10, 10);
+	wall11.SetPos(-57.5, 0, 260);
+	wall11.Render();
+
+	Cube wall12(10, 10, 50);
+	wall12.SetPos(-15, 0, 230);
+	wall12.Render();
+
+	Cube wall13(95, 10, 10);
+	wall13.SetPos(-57.5, 0, 210);
+	wall13.Render();
+
+	Cube wall14(10, 10, 170);
+	wall14.SetPos(-60, 0, 130);
+	wall14.Render();
+
 	sensor->GetTransform(&s.transform);
 	s.Render();
 
