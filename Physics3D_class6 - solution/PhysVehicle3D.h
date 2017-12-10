@@ -5,6 +5,7 @@
 
 class btRaycastVehicle;
 struct PhysBody3D;
+struct Color;
 
 struct Wheel
 {
@@ -23,6 +24,11 @@ struct Wheel
 struct VehicleInfo
 {
 	~VehicleInfo();
+
+	uint extra_parts;
+	vec3* extra_parts_size;
+	vec3* extra_parts_offset;
+	Color* color;
 	
 	vec3 chassis_size;
 	vec3 chassis_offset;
