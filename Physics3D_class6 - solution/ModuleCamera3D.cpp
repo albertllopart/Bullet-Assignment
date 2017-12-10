@@ -111,7 +111,9 @@ update_status ModuleCamera3D::Update(float dt)
 
 	float p_x = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getX() + 10 * App->player->vehicle->vehicle->getForwardVector().getX();
 	float p_z = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getZ() + 10 * App->player->vehicle->vehicle->getForwardVector().getZ();
-	LookAt(vec3(p_x, 1, p_z));
+	float p_y = App->player->vehicle->vehicle->getChassisWorldTransform().getOrigin().getY() + 7 * App->player->vehicle->vehicle->getUpAxis();
+
+	LookAt(vec3(p_x, p_y, p_z));
 
 	return UPDATE_CONTINUE;
 }
