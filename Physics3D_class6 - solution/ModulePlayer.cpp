@@ -47,7 +47,7 @@ bool ModulePlayer::Start()
 	car.color[3] = Blue;
 
 	car.mass = 700.0f;
-	car.suspensionStiffness = 15.88f;
+	car.suspensionStiffness = 1.88f;
 	car.suspensionCompression = 0.83f;
 	car.suspensionDamping = 0.88f;
 	car.maxSuspensionTravelCm = 1000.0f;
@@ -142,7 +142,7 @@ update_status ModulePlayer::Update(float dt)
 	{
 		if (vehicle->GetKmh() < -3)
 			brake = BRAKE_POWER;
-		else
+		//else if (vehicle->GetKmh() < 120)
 			acceleration = MAX_ACCELERATION;
 	}
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)

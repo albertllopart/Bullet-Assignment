@@ -21,22 +21,23 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	s.size = vec3(5, 3, 1);
-	s.SetPos(0, 2.5f, 20);
+	s.size = vec3(40, 0.1, 1);
+	s.SetPos(7, 0, 50);
 
 
-	Cube ramp_up(22, 2, 46);
-	ramp_up.SetPos(5, 0, 69.5);
-	ramp_up.SetRotation(-15, vec3(1, 0, 0));
+	Cube ramp_up(40, 2, 50);
+	ramp_up.SetPos(8, 1, 67);
+	ramp_up.SetRotation(-10, vec3(1, 0, 0));
 	App->physics->AddBody(ramp_up, 0);
+	//CreateRamp(vec3(40, 2, 50), vec3(8, 1, 67), - 10, vec3(1, 0, 0));
 
-	Cube ramp_down(22, 2, 46);
-	ramp_down.SetPos(5, 0, 138);
-	ramp_down.SetRotation(15, vec3(1, 0, 0));
+	Cube ramp_down(40, 2, 50);
+	ramp_down.SetPos(8, 1, 195);
+	ramp_down.SetRotation(10, vec3(1, 0, 0));
 	App->physics->AddBody(ramp_down, 0);
 
-	Cube roof(22, 2, 25);
-	roof.SetPos(5, 6, 104);
+	Cube roof(40, 2, 79);
+	roof.SetPos(8, 5.3, 131);
 	App->physics->AddBody(roof, 0);
 
 	sensor = App->physics->AddBody(s, 0.0f);
@@ -79,19 +80,20 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();
 
 
-	Cube ramp_up(22, 2, 46);
-	ramp_up.SetPos(5, 0, 69.5);
-	ramp_up.SetRotation(-15, vec3(1, 0, 0));
+	Cube ramp_up(40, 2, 50);
+	ramp_up.SetPos(8, 1, 67);
+	ramp_up.SetRotation(-10, vec3(1, 0, 0));
+	ramp_up.color = Blue;
 	ramp_up.Render();
 
 
-	Cube ramp_down(22, 2, 46);
-	ramp_down.SetPos(5, 0, 138);
-	ramp_down.SetRotation(15, vec3(1, 0, 0));
+	Cube ramp_down(40, 2, 50);
+	ramp_down.SetPos(8, 1, 195);
+	ramp_down.SetRotation(10, vec3(1, 0, 0));
 	ramp_down.Render();
 
-	Cube roof(22, 2, 25);
-	roof.SetPos(5, 6, 104);
+	Cube roof(40, 2, 79);
+	roof.SetPos(8, 5.3, 131);
 	roof.Render();
 
 	//map
