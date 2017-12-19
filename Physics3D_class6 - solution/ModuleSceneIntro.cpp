@@ -62,6 +62,7 @@ bool ModuleSceneIntro::Start()
 	for (int i = 0; i < SIZE_ARRAY(cube_defs); i++)
 		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
 
+	timer_laps.Start();
 	return ret;
 }
 
@@ -86,7 +87,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	s.Render();
 
 	char title[150];
-	sprintf_s(title, "%.1f Km/h ", App->player->vehicle->GetKmh());
+	sprintf_s(title, "%.1f Km/h - %02i:%02i", App->player->vehicle->GetKmh(), timer_laps.ReadSec() / 60, timer_laps.ReadSec() % 60);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;

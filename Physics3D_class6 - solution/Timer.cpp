@@ -37,5 +37,17 @@ Uint32 Timer::Read()
 		return stopped_at - started_at;
 	}
 }
+// ----------------------------------------------
+Uint32 Timer::ReadSec()
+{
+	if (running == true)
+	{
+		return (SDL_GetTicks() - started_at) / 1000;
+	}
+	else
+	{
+		return (stopped_at - started_at) / 1000;
+	}
+}
 
 

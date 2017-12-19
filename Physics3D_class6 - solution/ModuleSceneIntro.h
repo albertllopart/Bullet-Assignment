@@ -28,5 +28,7 @@ public:
 	Cube s;
 	PhysBody3D* sensor;
 	p2List<Cube> cube;
+
+	Timer timer_laps;
 	
 };
