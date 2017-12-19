@@ -52,17 +52,17 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	s.size = vec3(40, 0.1, 1);
-	s.SetPos(7, 0, 50);
+	s1.size = vec3(40, 5, 1);
+	s1.SetPos(7, 0, 50);
 
-	sensor = App->physics->AddBody(s, 0.0f);
+	sensor = App->physics->AddBody(s1, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 
 	for (int i = 0; i < SIZE_ARRAY(cube_defs); i++)
 		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
 
-	timer_laps.Start();
+
 	return ret;
 }
 
@@ -83,8 +83,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	DrawMap();
 
-	sensor->GetTransform(&s.transform);
-	s.Render();
+	sensor->GetTransform(&s1.transform);
+	s1.Render();
 
 	char title[150];
 	sprintf_s(title, "%.1f Km/h - %02i:%02i", App->player->vehicle->GetKmh(), timer_laps.ReadSec() / 60, timer_laps.ReadSec() % 60);
@@ -95,6 +95,10 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
+	if (body2 = sensor) {
+		timer_laps.Start();
+		started = true;
+	}
 	LOG("Hit!");
 }
 

@@ -25,10 +25,10 @@ public:
 	void DrawMap();
 
 public:
-	Cube s;
+	Cube s1;
 	PhysBody3D* sensor;
 	p2List<Cube> cube;
 
 	Timer timer_laps;
-	
+	bool started = false;
 };
