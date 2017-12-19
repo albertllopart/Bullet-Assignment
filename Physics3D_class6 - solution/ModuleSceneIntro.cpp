@@ -5,6 +5,36 @@
 #include "PhysBody3D.h"
 #include "PhysVehicle3D.h"
 
+#define SIZE_ARRAY(a) (sizeof(a)/sizeof(a[0]))
+
+struct CubeDef {
+	vec3 dim;
+	vec3 pos;
+	int  incl_ang;
+	vec3 incl_axis;
+};
+
+CubeDef cube_defs[] = {
+	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), -10, vec3(1, 0, 0) },			//Rampa
+	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), 10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131)},						//Pont
+	
+																			//External Walls
+	{ vec3(310, 80,  20),   vec3(    0,  0, -5)			//Wall 1
+	{ vec3( 20, 80, 300),   vec3( -150,  0, 155);		//Wall 2
+	{ vec3( 20, 80, 300),   vec3(  150,  0, 155);		//Wall 3
+	{ vec3(310, 80,  20),   vec3(    0,  0, 305);			//Wall 4
+						  	     
+	{ 					  		  					//internal Walls
+	{ vec3( 10, 10, 220),   vec3(  110, 0, 155)		//Wall 6
+	{ vec3( 80, 10,  10),   vec3(   65, 0, 50))			//Wall 7
+	{ vec3( 10, 10,  50),   vec3(  -15, 0, 30))			//Wall 9
+	{ vec3( 10, 10, 100),   vec3(   30, 0, 255)			//Wall 10
+	{ vec3(105, 10,  55),   vec3(-62.5, 0, 235)		//Wall 12
+	{ 					   
+	{ vec3(55, 10, 175),   vec3(-87.5, 0,  120)		//Wall 14
+};
+
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
 }
@@ -24,42 +54,34 @@ bool ModuleSceneIntro::Start()
 	s.size = vec3(40, 0.1, 1);
 	s.SetPos(7, 0, 50);
 
-
-	Cube ramp_up(40, 2, 50);
-	ramp_up.SetPos(8, 1, 67);
-	ramp_up.SetRotation(-10, vec3(1, 0, 0));
-	App->physics->AddBody(ramp_up, 0);
-	//CreateRamp(vec3(40, 2, 50), vec3(8, 1, 67), - 10, vec3(1, 0, 0));
-
-	Cube ramp_down(40, 2, 50);
-	ramp_down.SetPos(8, 1, 195);
-	ramp_down.SetRotation(10, vec3(1, 0, 0));
-	App->physics->AddBody(ramp_down, 0);
-
-	Cube roof(40, 2, 79);
-	roof.SetPos(8, 5.3, 131);
-	App->physics->AddBody(roof, 0);
-
 	sensor = App->physics->AddBody(s, 0.0f);
 	sensor->SetAsSensor(true);
 	sensor->collision_listeners.add(this);
 
-	//map collisions
-	Cube wall1(310, 10, 10);
-	wall1.SetPos(0, 0, 0);
-	App->physics->AddBody(wall1, 0);
+	for (int i = 0; i < SIZE_ARRAY(cube_defs); i++)
+		CreateCub(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].incl_ang, cube_defs[i].incl_axis);
+	/*
+	CreateCub(vec3(40, 2, 50), vec3(8, 1, 67), - 10, vec3(1, 0, 0));	//Rampa
+	CreateCub(vec3(40, 2, 50), vec3(8, 1, 195), 10, vec3(1, 0, 0));		//Rampa
+	CreateCub(vec3(40, 2, 79), vec3(8, 5.3, 131));						//Pont
 
-	Cube wall2(10, 10, 300);
-	wall2.SetPos(-150, 0, 155);
-	App->physics->AddBody(wall2, 0);
 
-	Cube wall3(10, 10, 300);
-	wall3.SetPos(150, 0, 155);
-	App->physics->AddBody(wall3, 0);
 
-	Cube wall4(310, 10, 10);
-	wall4.SetPos(0, 0, 310);
-	App->physics->AddBody(wall4, 0);
+	//External Walls
+	CreateCub(vec3(310, 80, 20), vec3(0, 0, -5));			//Wall 1
+	CreateCub(vec3(20, 80, 300), vec3(-150, 0, 155));		//Wall 2
+	CreateCub(vec3(20, 80, 300), vec3(150, 0, 155));		//Wall 3
+	CreateCub(vec3(310, 80, 20), vec3(0, 0, 305));			//Wall 4
+
+
+	//internal Walls
+	CreateCub(vec3(10, 10, 220), vec3(110, 0, 155));		//Wall 6
+	CreateCub(vec3(80, 10, 10), vec3(65, 0, 50));			//Wall 7
+	CreateCub(vec3(10, 10, 50), vec3(-15, 0, 30));			//Wall 9
+	CreateCub(vec3(10, 10, 100), vec3(30, 0, 255));			//Wall 10
+	CreateCub(vec3(105, 10, 55), vec3(-62.5, 0, 235));		//Wall 12
+	CreateCub(vec3(55, 10, 175), vec3(-87.5, 0, 120));		//Wall 14
+	*/
 
 	return ret;
 }
@@ -79,80 +101,7 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.axis = false;
 	p.Render();
 
-
-	Cube ramp_up(40, 2, 50);
-	ramp_up.SetPos(8, 1, 67);
-	ramp_up.SetRotation(-10, vec3(1, 0, 0));
-	ramp_up.color = Blue;
-	ramp_up.Render();
-
-
-	Cube ramp_down(40, 2, 50);
-	ramp_down.SetPos(8, 1, 195);
-	ramp_down.SetRotation(10, vec3(1, 0, 0));
-	ramp_down.Render();
-
-	Cube roof(40, 2, 79);
-	roof.SetPos(8, 5.3, 131);
-	roof.Render();
-
-	//map
-	Cube wall1(310, 10, 10);
-	wall1.SetPos(0, 0, 0);
-	wall1.Render();
-
-	Cube wall2(10, 10, 300);
-	wall2.SetPos(-150, 0, 155);
-	wall2.Render();
-
-	Cube wall3(10, 10, 300);
-	wall3.SetPos(150, 0, 155);
-	wall3.Render();
-
-	Cube wall4(310, 10, 10);
-	wall4.SetPos(0, 0, 310);
-	wall4.Render();
-
-	//interior walls
-	Cube wall5(10, 10, 220);
-	wall5.SetPos(-110, 0, 155);
-	wall5.Render();
-
-	Cube wall6(10, 10, 220);
-	wall6.SetPos(110, 0, 155);
-	wall6.Render();
-
-	Cube wall7(80, 10, 10);
-	wall7.SetPos(65, 0, 50);
-	wall7.Render();
-
-	Cube wall8(40, 10, 10);
-	wall8.SetPos(-85, 0, 50);
-	wall8.Render();
-
-	Cube wall9(10, 10, 50);
-	wall9.SetPos(-15, 0, 30);
-	wall9.Render();
-
-	Cube wall10(10, 10, 100);
-	wall10.SetPos(30, 0, 255);
-	wall10.Render();
-
-	Cube wall11(95, 10, 10);
-	wall11.SetPos(-57.5, 0, 260);
-	wall11.Render();
-
-	Cube wall12(10, 10, 50);
-	wall12.SetPos(-15, 0, 230);
-	wall12.Render();
-
-	Cube wall13(95, 10, 10);
-	wall13.SetPos(-57.5, 0, 210);
-	wall13.Render();
-
-	Cube wall14(10, 10, 170);
-	wall14.SetPos(-60, 0, 130);
-	wall14.Render();
+	DrawMap();
 
 	sensor->GetTransform(&s.transform);
 	s.Render();
@@ -169,3 +118,17 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	LOG("Hit!");
 }
 
+void ModuleSceneIntro::CreateCub(vec3 dimensions, vec3 pos, int rot, vec3 vecRot) {
+
+	Cube c(dimensions.x, dimensions.y, dimensions.z) ;
+	c.SetPos(pos.x, pos.y, pos.z);
+	if(rot != 0)
+		c.SetRotation(rot, vecRot);
+	App->physics->AddBody(c, 0);
+	cube.add(c);
+}
+
+void ModuleSceneIntro::DrawMap() {
+	for (p2List_item<Cube>* iter = cube.getFirst(); iter; iter = iter->next)
+		iter->data.Render();
+}

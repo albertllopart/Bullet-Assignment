@@ -21,7 +21,12 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
+	void CreateCub(vec3 dimensions, vec3 pos, int rot = 0, vec3 vecRot = { 0,0,0 });
+	void DrawMap();
+
 public:
 	Cube s;
 	PhysBody3D* sensor;
+	p2List<Cube> cube;
+	
 };
