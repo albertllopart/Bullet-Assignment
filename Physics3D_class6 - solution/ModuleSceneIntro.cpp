@@ -12,35 +12,36 @@ struct CubeDef {
 	vec3 pos;
 	Color color;
 	bool sens;
+	bool hide;
 	int  incl_ang;
 	vec3 incl_axis;
 };
 
 CubeDef cube_defs[] = {
-	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), White, false, -10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), White, false,  10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), White},									//Pont
+	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), White, false, false, -10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), White, false, false,  10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), White},											//Pont
 	
 //External Walls
-	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), White},							//Wall 1
-	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), White},							//Wall 2
-	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), White},							//Wall 3
-	{ vec3(310, 80,  20),   vec3(    0,   0, 305), White},							//Wall 4
+	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), White, false, true},								//Wall 1
+	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), White, false, true},								//Wall 2
+	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), White, false, true},								//Wall 3
+	{ vec3(310, 80,  20),   vec3(    0,   0, 305), White, false, true},								//Wall 4
 						  	     		  		 
 //internal Walls
 
-	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), White},							//Wall 6
-	{ vec3( 80, 10,  10),   vec3(   65,   0,  50), White},							//Wall 7
-	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), White},							//Wall 9
-	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), White},							//Wall 10
-	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), White},							//Wall 12 					   
-	{ vec3( 55, 10, 175),   vec3(-87.5,   0, 120), White},							//Wall 14
+	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), White},											//Wall 6
+	{ vec3( 80, 10,  10),   vec3(   65,   0,  50), White},											//Wall 7
+	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), White},											//Wall 9
+	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), White},											//Wall 10
+	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), White},											//Wall 12 					   
+	{ vec3( 55, 10, 175),   vec3(-87.5,   0, 120), White},											//Wall 14
 
 //Sensors
 
-	{ vec3( 40,  5,   1),	vec3(    7,   0,  50), White, true},					//sens1
-	{ vec3( 40,  5,   1),	vec3( -130,   0,  50), White, true},					//sens2
-	{ vec3( 40,  5,   1),	vec3(  130,   0,  50), White, true},					//sens3
+	{ vec3( 40,  5,   1),	vec3(    7,   0,  50), White, true},									//sens1
+	{ vec3( 40,  5,   1),	vec3( -130,   0,  50), White, true},									//sens2
+	{ vec3( 40,  5,   1),	vec3(  130,   0,  50), White, true},									//sens3
 
 };
 
@@ -61,7 +62,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	for (int i = 0; i < SIZE_ARRAY(cube_defs); i++)
-		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].sens, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
+		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].sens, cube_defs[i].hide, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
 
 
 	return ret;
@@ -83,10 +84,17 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();
 
 	DrawMap();
-	char title[150];
-	sprintf_s(title, "%.1f Km/h - Timer ->%02i:%02i - Best Lap ->%02i:%02i", App->player->vehicle->GetKmh(), timer_laps.ReadSec() / 60, timer_laps.ReadSec() % 60, best_time / 60, best_time % 60);
-	App->window->SetTitle(title);
 
+	if (!WantToStart) {
+		char title[150];
+		sprintf_s(title, "Click Enter to start the game (3Laps)");
+		App->window->SetTitle(title);
+	}
+	else {
+		char title[150];
+		sprintf_s(title, "%.1f Km/h - Timer ->%02i:%02i - Best Lap ->%02i:%02i", App->player->vehicle->GetKmh(), timer_laps.ReadSec() / 60, timer_laps.ReadSec() % 60, best_time / 60, best_time % 60);
+		App->window->SetTitle(title);
+	}
 	return UPDATE_CONTINUE;
 }
 
@@ -100,6 +108,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			half_lap = false;
 			if (timer_laps.ReadSec() < best_time)
 				best_time = timer_laps.ReadSec();
+			timer_laps.Start();
 		}
 		if (!started) {
 			timer_laps.Start();
@@ -114,7 +123,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 }
 
-void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, int rot, vec3 vecRot, Color color) {
+void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hide, int rot, vec3 vecRot, Color color) {
 
 	Cube c(dimensions.x, dimensions.y, dimensions.z) ;
 	c.SetPos(pos.x, pos.y, pos.z);
@@ -122,6 +131,7 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, int rot,
 		if (rot != 0)
 			c.SetRotation(rot, vecRot);
 		c.color = color;
+		c.wire = hide;
 		App->physics->AddBody(c, 0);
 		cube.add(c);
 	}
@@ -131,7 +141,7 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, int rot,
 
 void ModuleSceneIntro::DrawMap() {
 	for (p2List_item<Cube>* iter = cube.getFirst(); iter; iter = iter->next)
-		iter->data.Render();
+			iter->data.Render();
 }
 
 void ModuleSceneIntro::AddSensor(Cube c){

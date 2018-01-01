@@ -43,24 +43,24 @@ bool ModuleCamera3D::CleanUp()
 // -----------------------------------------------------------------
 update_status ModuleCamera3D::Update(float dt)
 {
-	if (App->scene_intro->WantToStart)
+	if (!App->scene_intro->WantToStart)
 	{
 		if (positive)
 		{
-			if (x < 180)
+			if (x < 80)
 				x += 0.20f;
 			else
 				positive = false;
 		}
 		else
 		{
-			if (x > 30)
+			if (x > -80)
 				x -= 0.20f;
 			else
 				positive = true;
 		}
 
-		Position = { x, 120, -60 };
+		Position = { x, 120, -80 };
 		LookAt(vec3(x, 0, 50));
 	}
 	//FolowPlayer

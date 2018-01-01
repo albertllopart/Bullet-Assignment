@@ -21,7 +21,7 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	void CreateCube(vec3 dimensions, vec3 pos, bool sens = false, int rot = 0, vec3 vecRot = { 0,0,0 },Color color = White);
+	void CreateCube(vec3 dimensions, vec3 pos, bool sens = false, bool hide = false, int rot = 0, vec3 vecRot = { 0,0,0 },Color color = White);
 	void DrawMap();
 	void AddSensor(Cube c);
 

@@ -136,9 +136,12 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_REPEAT)
-		App->scene_intro->WantToStart = false;
-		if (!App->scene_intro->WantToStart) {
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && !App->scene_intro->WantToStart) {
+		App->scene_intro->WantToStart = true;
+		for (p2List_item<Cube>* iter = App->scene_intro->cube.getFirst(); iter; iter = iter->next)
+			iter->data.wire = false;
+	}
+		if (App->scene_intro->WantToStart) {
 		turn = acceleration = brake = 0.0f;
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
