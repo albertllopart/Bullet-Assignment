@@ -84,7 +84,7 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	DrawMap();
 	char title[150];
-	sprintf_s(title, "%.1f Km/h - %02i:%02i", App->player->vehicle->GetKmh(), timer_laps.ReadSec() / 60, timer_laps.ReadSec() % 60);
+	sprintf_s(title, "%.1f Km/h - Timer ->%02i:%02i - Best Lap ->%02i:%02i", App->player->vehicle->GetKmh(), timer_laps.ReadSec() / 60, timer_laps.ReadSec() % 60, best_time / 60, best_time % 60);
 	App->window->SetTitle(title);
 
 	return UPDATE_CONTINUE;
@@ -92,16 +92,26 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	p2List_item<PhysBody3D*>* sens_list = sens.getFirst();
+	p2List_item<PhysBody3D*>* sens_list = sens.getFirst()->next;
 
-	if (body1 == sens_list->data) {
-		timer_laps.Start();
-		started = true;
+	if (body1 == sens_list->prev->data) {
+		if (last_sensor) {
+			last_sensor = false;
+			half_lap = false;
+			if (timer_laps.ReadSec() < best_time)
+				best_time = timer_laps.ReadSec();
+		}
+		if (!started) {
+			timer_laps.Start();
+			started = true;
+		}
 	}
-	if (body1 == sens_list->next->data) {
+	else if (body1 == sens_list->data && started)
 		half_lap = true;
-	}
-	LOG("Hit!");
+
+	else if (body1 == sens_list->next->data && started && half_lap)
+		last_sensor = true;	
+
 }
 
 void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, int rot, vec3 vecRot, Color color) {

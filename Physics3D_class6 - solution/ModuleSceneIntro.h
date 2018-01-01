@@ -34,6 +34,7 @@ public:
 	p2List<Cube> cube;
 
 	Timer timer_laps;
+	uint best_time = 6000;
 	bool started = false;
 	bool half_lap = false;
 	bool last_sensor = false;
