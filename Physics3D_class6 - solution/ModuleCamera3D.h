@@ -21,6 +21,8 @@ public:
 private:
 
 	void CalculateViewMatrix();
+	float x;
+	bool positive;
 
 public:
 	
