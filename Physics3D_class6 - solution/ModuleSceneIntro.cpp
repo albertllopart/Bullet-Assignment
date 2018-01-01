@@ -40,6 +40,8 @@ CubeDef cube_defs[] = {
 
 	{ vec3( 40,  5,   1),	vec3(    7,   0,  50), White, true},					//sens1
 	{ vec3( 40,  5,   1),	vec3( -130,   0,  50), White, true},					//sens2
+	{ vec3( 40,  5,   1),	vec3(  130,   0,  50), White, true},					//sens3
+
 };
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -57,9 +59,6 @@ bool ModuleSceneIntro::Start()
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
-
-	//s1.size = vec3(40, 5, 1);
-	//s1.SetPos(-130, 0, 50);
 
 	for (int i = 0; i < SIZE_ARRAY(cube_defs); i++)
 		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].sens, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
@@ -84,10 +83,6 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();
 
 	DrawMap();
-
-	//sensor->GetTransform(&s1.transform);
-	//s1.Render();
-
 	char title[150];
 	sprintf_s(title, "%.1f Km/h - %02i:%02i", App->player->vehicle->GetKmh(), timer_laps.ReadSec() / 60, timer_laps.ReadSec() % 60);
 	App->window->SetTitle(title);
@@ -98,9 +93,13 @@ update_status ModuleSceneIntro::Update(float dt)
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
 	p2List_item<PhysBody3D*>* sens_list = sens.getFirst();
-	if (body2 = sens_list->data) {
+
+	if (body1 == sens_list->data) {
 		timer_laps.Start();
 		started = true;
+	}
+	if (body1 == sens_list->next->data) {
+		half_lap = true;
 	}
 	LOG("Hit!");
 }
@@ -114,9 +113,10 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, int rot,
 			c.SetRotation(rot, vecRot);
 		c.color = color;
 		App->physics->AddBody(c, 0);
-		cube.add(c);
 	}
-	else
+		cube.add(c);
+	//}
+	if(sens)
 		AddSensor(c);
 }
 

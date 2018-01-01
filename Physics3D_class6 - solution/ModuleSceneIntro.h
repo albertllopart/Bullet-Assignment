@@ -35,4 +35,6 @@ public:
 
 	Timer timer_laps;
 	bool started = false;
+	bool half_lap = false;
+	bool last_sensor = false;
 };
