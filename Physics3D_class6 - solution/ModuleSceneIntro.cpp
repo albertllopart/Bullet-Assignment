@@ -106,6 +106,8 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	p2List_item<PhysBody3D*>* sens_list = sens.getFirst()->next;
 
 	if (body1 == sens_list->prev->data) {
+		if (App->player->vehicle->GetKmh() > 220)
+			App->player->vehicle->GetKmh() = 220;
 		if (last_sensor) {
 			last_sensor = false;
 			half_lap = false;
