@@ -123,9 +123,8 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, int rot,
 			c.SetRotation(rot, vecRot);
 		c.color = color;
 		App->physics->AddBody(c, 0);
-	}
 		cube.add(c);
-	//}
+	}
 	if(sens)
 		AddSensor(c);
 }
