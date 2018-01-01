@@ -121,7 +121,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(0, 0, 20);
-	
+
 	return true;
 }
 
@@ -136,6 +136,12 @@ bool ModulePlayer::CleanUp()
 // Update: draw background
 update_status ModulePlayer::Update(float dt)
 {
+	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
+		vehicle->SetTransform(reset);
+		vehicle->SetPos(0, 0, 20);
+		turn = acceleration = brake = 0.0f;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && !App->scene_intro->WantToStart) {
 		App->scene_intro->WantToStart = true;
 		for (p2List_item<Cube>* iter = App->scene_intro->cube.getFirst(); iter; iter = iter->next)
@@ -148,7 +154,7 @@ update_status ModulePlayer::Update(float dt)
 		{
 			if (vehicle->GetKmh() < -3)
 				brake = BRAKE_POWER;
-			//else if (vehicle->GetKmh() < 220)
+			else if (vehicle->GetKmh() < 220)
 			acceleration = MAX_ACCELERATION;
 		}
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)

@@ -26,4 +26,5 @@ public:
 	float turn;
 	float acceleration;
 	float brake;
+	float reset[16] = { 1,0,0,0,0,1,0,0,0,0,1,0,0,0.6f,20,1 };
 };
