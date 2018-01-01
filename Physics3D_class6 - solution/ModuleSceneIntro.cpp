@@ -11,14 +11,15 @@ struct CubeDef {
 	vec3 dim;
 	vec3 pos;
 	Color color;
+	bool sens;
 	int  incl_ang;
 	vec3 incl_axis;
 };
 
 CubeDef cube_defs[] = {
-	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), White, -10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), White,  10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), White},							//Pont
+	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), White, false, -10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), White, false,  10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), White},									//Pont
 	
 //External Walls
 	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), White},							//Wall 1
@@ -33,7 +34,12 @@ CubeDef cube_defs[] = {
 	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), White},							//Wall 9
 	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), White},							//Wall 10
 	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), White},							//Wall 12 					   
-	{ vec3(55, 10, 175),    vec3(-87.5,   0, 120), White},							//Wall 14
+	{ vec3( 55, 10, 175),   vec3(-87.5,   0, 120), White},							//Wall 14
+
+//Sensors
+
+	{ vec3( 40,  5,   1),	vec3(    7,   0,  50), White, true},					//sens1
+	{ vec3( 40,  5,   1),	vec3( -130,   0,  50), White, true},					//sens2
 };
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
@@ -52,15 +58,11 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
-	s1.size = vec3(40, 5, 1);
-	s1.SetPos(7, 0, 50);
-
-	sensor = App->physics->AddBody(s1, 0.0f);
-	sensor->SetAsSensor(true);
-	sensor->collision_listeners.add(this);
+	//s1.size = vec3(40, 5, 1);
+	//s1.SetPos(-130, 0, 50);
 
 	for (int i = 0; i < SIZE_ARRAY(cube_defs); i++)
-		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
+		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].sens, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
 
 
 	return ret;
@@ -83,8 +85,8 @@ update_status ModuleSceneIntro::Update(float dt)
 
 	DrawMap();
 
-	sensor->GetTransform(&s1.transform);
-	s1.Render();
+	//sensor->GetTransform(&s1.transform);
+	//s1.Render();
 
 	char title[150];
 	sprintf_s(title, "%.1f Km/h - %02i:%02i", App->player->vehicle->GetKmh(), timer_laps.ReadSec() / 60, timer_laps.ReadSec() % 60);
@@ -95,25 +97,39 @@ update_status ModuleSceneIntro::Update(float dt)
 
 void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 {
-	if (body2 = sensor) {
+	p2List_item<PhysBody3D*>* sens_list = sens.getFirst();
+	if (body2 = sens_list->data) {
 		timer_laps.Start();
 		started = true;
 	}
 	LOG("Hit!");
 }
 
-void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, int rot, vec3 vecRot, Color color) {
+void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, int rot, vec3 vecRot, Color color) {
 
 	Cube c(dimensions.x, dimensions.y, dimensions.z) ;
 	c.SetPos(pos.x, pos.y, pos.z);
-	if(rot != 0)
-		c.SetRotation(rot, vecRot);
-	c.color = color;
-	App->physics->AddBody(c, 0);
-	cube.add(c);
+	if (!sens) {
+		if (rot != 0)
+			c.SetRotation(rot, vecRot);
+		c.color = color;
+		App->physics->AddBody(c, 0);
+		cube.add(c);
+	}
+	else
+		AddSensor(c);
 }
 
 void ModuleSceneIntro::DrawMap() {
 	for (p2List_item<Cube>* iter = cube.getFirst(); iter; iter = iter->next)
 		iter->data.Render();
+}
+
+void ModuleSceneIntro::AddSensor(Cube c){
+	PhysBody3D* sensor;
+	sensor = App->physics->AddBody(c, 0.0f);
+	sensor->SetAsSensor(true);
+	sensor->collision_listeners.add(this);
+
+	sens.add(sensor);
 }

@@ -21,12 +21,16 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	void CreateCube(vec3 dimensions, vec3 pos, int rot = 0, vec3 vecRot = { 0,0,0 },Color color = White);
+	void CreateCube(vec3 dimensions, vec3 pos, bool sens = false, int rot = 0, vec3 vecRot = { 0,0,0 },Color color = White);
 	void DrawMap();
+	void AddSensor(Cube c);
 
 public:
 	Cube s1;
-	PhysBody3D* sensor;
+	p2List<PhysBody3D*> sens;
+	//PhysBody3D* sensor =  nullptr;
+	//PhysBody3D* sensor2 = nullptr;
+	//PhysBody3D* sensor3 = nullptr;
 	p2List<Cube> cube;
 
 	Timer timer_laps;
