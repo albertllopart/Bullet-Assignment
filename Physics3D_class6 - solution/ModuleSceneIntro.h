@@ -24,17 +24,16 @@ public:
 	void CreateCube(vec3 dimensions, vec3 pos, bool sens = false, bool hide = false, int rot = 0, vec3 vecRot = { 0,0,0 },Color color = White);
 	void DrawMap();
 	void AddSensor(Cube c);
+	void PreviousWire();
 
 public:
 	Cube s1;
 	p2List<PhysBody3D*> sens;
-	//PhysBody3D* sensor =  nullptr;
-	//PhysBody3D* sensor2 = nullptr;
-	//PhysBody3D* sensor3 = nullptr;
 	p2List<Cube> cube;
 
 	Timer timer_laps;
 	uint best_time = 6000;
+	uint laps = 0u;
 	bool started = false;
 	bool half_lap = false;
 	bool last_sensor = false;

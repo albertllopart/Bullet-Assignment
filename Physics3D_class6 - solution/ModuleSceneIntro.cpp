@@ -23,19 +23,19 @@ CubeDef cube_defs[] = {
 	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), Orange},											//Pont
 	
 //External Walls
-	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), Orange, false, true},								//Wall 1
-	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), Orange, false, true},								//Wall 2
-	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), Orange, false, true},								//Wall 3
-	{ vec3(310, 80,  20),   vec3(    0,   0, 305), Orange, false, true},								//Wall 4
+	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), Orange, false, true},							//Wall 1
+	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), Orange, false, true},							//Wall 2
+	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), Orange, false, true},							//Wall 3
+	{ vec3(310, 80,  20),   vec3(    0,   0, 305), Orange, false, true},							//Wall 4
 						  	     		  		 
 //internal Walls
 
-	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), Orange },											//Wall 6
-	{ vec3( 80, 10,  10),   vec3(   65,   0,  50), Orange },											//Wall 7
-	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), Orange },											//Wall 9
-	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), Orange },											//Wall 10
-	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), Orange },											//Wall 12 					   
-	{ vec3( 55, 10, 175),   vec3(-87.5,   0, 120), Orange },											//Wall 14
+	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), Orange },										//Wall 6
+	{ vec3( 80, 10,  10),   vec3(   65,   0,  50), Orange },										//Wall 7
+	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), Orange },										//Wall 9
+	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), Orange },										//Wall 10
+	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), Orange },										//Wall 12 					   
+	{ vec3( 55, 10, 175),   vec3(-87.5,   0, 120), Orange },										//Wall 14
 
 //Sensors
 
@@ -84,10 +84,13 @@ update_status ModuleSceneIntro::Update(float dt)
 	p.Render();
 
 	DrawMap();
-
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN) {
+		WantToStart = false;
+		PreviousWire();
+	}
 	if (!WantToStart) {
 		char title[150];
-		sprintf_s(title, "Click Enter to start the game (3Laps)");
+		sprintf_s(title, "Click Enter to start the game (3Laps) - Best Lap ->%02i:%02i", best_time / 60, best_time % 60);
 		App->window->SetTitle(title);
 	}
 	else {
@@ -109,6 +112,11 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 			if (timer_laps.ReadSec() < best_time)
 				best_time = timer_laps.ReadSec();
 			timer_laps.Start();
+			laps++;
+			if (laps == 3) {
+				WantToStart = false;
+				PreviousWire();
+			}
 		}
 		if (!started) {
 			timer_laps.Start();
@@ -151,4 +159,12 @@ void ModuleSceneIntro::AddSensor(Cube c){
 	sensor->collision_listeners.add(this);
 
 	sens.add(sensor);
+}
+
+void ModuleSceneIntro::PreviousWire() {
+	p2List_item<Cube>* iter = App->scene_intro->cube.getFirst();
+	for (int i = 0; iter; i++, iter = iter->next) {
+		iter->data.wire = cube_defs[i].hide;
+
+	}
 }
