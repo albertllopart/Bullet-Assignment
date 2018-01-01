@@ -18,30 +18,30 @@ struct CubeDef {
 };
 
 CubeDef cube_defs[] = {
-	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), White, false, false, -10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), White, false, false,  10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), White},											//Pont
+	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), Orange, false, false, -10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), Orange, false, false,  10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), Orange},											//Pont
 	
 //External Walls
-	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), White, false, true},								//Wall 1
-	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), White, false, true},								//Wall 2
-	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), White, false, true},								//Wall 3
-	{ vec3(310, 80,  20),   vec3(    0,   0, 305), White, false, true},								//Wall 4
+	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), Orange, false, true},								//Wall 1
+	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), Orange, false, true},								//Wall 2
+	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), Orange, false, true},								//Wall 3
+	{ vec3(310, 80,  20),   vec3(    0,   0, 305), Orange, false, true},								//Wall 4
 						  	     		  		 
 //internal Walls
 
-	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), White},											//Wall 6
-	{ vec3( 80, 10,  10),   vec3(   65,   0,  50), White},											//Wall 7
-	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), White},											//Wall 9
-	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), White},											//Wall 10
-	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), White},											//Wall 12 					   
-	{ vec3( 55, 10, 175),   vec3(-87.5,   0, 120), White},											//Wall 14
+	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), Orange },											//Wall 6
+	{ vec3( 80, 10,  10),   vec3(   65,   0,  50), Orange },											//Wall 7
+	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), Orange },											//Wall 9
+	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), Orange },											//Wall 10
+	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), Orange },											//Wall 12 					   
+	{ vec3( 55, 10, 175),   vec3(-87.5,   0, 120), Orange },											//Wall 14
 
 //Sensors
 
-	{ vec3( 40,  5,   1),	vec3(    7,   0,  50), White, true},									//sens1
-	{ vec3( 40,  5,   1),	vec3( -130,   0,  50), White, true},									//sens2
-	{ vec3( 40,  5,   1),	vec3(  130,   0,  50), White, true},									//sens3
+	{ vec3( 40,  5,   1),	vec3(    7,   0,  50), Orange, true},									//sens1
+	{ vec3( 40,  5,   1),	vec3( -130,   0,  50), Orange, true},									//sens2
+	{ vec3( 40,  5,   1),	vec3(  130,   0,  50), Orange, true},									//sens3
 
 };
 
