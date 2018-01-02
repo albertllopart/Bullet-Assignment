@@ -16,6 +16,7 @@ ModulePlayer::~ModulePlayer()
 // Load assets
 bool ModulePlayer::Start()
 {
+
 	LOG("Loading player");
 
 	VehicleInfo car;
@@ -143,6 +144,7 @@ update_status ModulePlayer::Update(float dt)
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN && !App->scene_intro->WantToStart) {
 		App->scene_intro->WantToStart = true;
+		App->audio->PlayMusic("Sounds/Race.ogg");
 		for (p2List_item<Cube>* iter = App->scene_intro->cube.getFirst(); iter; iter = iter->next)
 			iter->data.wire = false;
 	}
