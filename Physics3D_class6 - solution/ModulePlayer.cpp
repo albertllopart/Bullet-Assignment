@@ -138,7 +138,6 @@ update_status ModulePlayer::Update(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN) {
 		vehicle->SetTransform(reset);
-		vehicle->SetPos(0, 0, 20);
 		turn = acceleration = brake = 0.0f;
 	}
 
@@ -147,7 +146,8 @@ update_status ModulePlayer::Update(float dt)
 		for (p2List_item<Cube>* iter = App->scene_intro->cube.getFirst(); iter; iter = iter->next)
 			iter->data.wire = false;
 	}
-		if (App->scene_intro->WantToStart) {
+	
+	if (App->scene_intro->WantToStart) {
 		turn = acceleration = brake = 0.0f;
 
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)

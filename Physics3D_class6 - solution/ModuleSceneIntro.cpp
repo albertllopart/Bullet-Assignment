@@ -20,14 +20,14 @@ struct CubeDef {
 CubeDef cube_defs[] = {
 	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), Orange, false, false, -10, vec3(1, 0, 0) },		//Rampa
 	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), Orange, false, false,  10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), Orange},											//Pont
+	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), Orange },											//Pont
 	
 //External Walls
-	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), Orange, false, true},							//Wall 1
-	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), Orange, false, true},							//Wall 2
-	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), Orange, false, true},							//Wall 3
-	{ vec3(310, 80,  20),   vec3(    0,   0, 305), Orange, false, true},							//Wall 4
-						  	     		  		 
+	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), White , false, true},							//Wall 1
+	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), White , false, true},							//Wall 2
+	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), White , false, true},							//Wall 3
+	{ vec3(310, 80,  20),   vec3(    0,   0, 305), White , false, true},							//Wall 4
+						  	     		  		 		 
 //internal Walls
 
 	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), Orange },										//Wall 6
@@ -81,6 +81,7 @@ update_status ModuleSceneIntro::Update(float dt)
 {
 	Plane p(0, 1, 0, 0);
 	p.axis = false;
+	p.color = Green;
 	p.Render();
 
 	DrawMap();
