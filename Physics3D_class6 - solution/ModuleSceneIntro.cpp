@@ -18,9 +18,17 @@ struct CubeDef {
 };
 
 CubeDef cube_defs[] = {
-	{ vec3( 40,  2,  50),   vec3(    8,	  1,  67), Orange, false, false, -10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  50),   vec3(    8,   1, 195), Orange, false, false,  10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 40,  2,  79),   vec3(    8, 5.3, 131), Orange },											//Pont
+	{ vec3( 35,  15,  50),   vec3(    7.5,	  -5.3,  69), Orange, false, false, -10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 10,  15,  50),   vec3(   -15,      0,    68), Orange, false, false, -10, vec3(1, 0, 0) },       //barana dreta
+	{ vec3(10,  15,  50),   vec3(30,      0,    68), Orange, false, false, -10, vec3(1, 0, 0) },       //barana esquerra
+
+	{ vec3( 35,  15,  50),   vec3(    7.5,   -5.4, 193), Orange, false, false,  10, vec3(1, 0, 0) },		//Rampa
+	{ vec3(10,  15,  50),    vec3(    -15,      0,    194), Orange, false, false, 10, vec3(1, 0, 0) },           //barana dreta
+	{ vec3(10,  15,  50),    vec3(30,      0,    194), Orange, false, false, 10, vec3(1, 0, 0) },           //barana esquerra
+
+	{ vec3( 35,  2,  79),   vec3(    7.5, 5.3, 131), Orange },											//Pont
+	{ vec3(10,  6,  79),   vec3(-15, 8.7, 131), Orange },												//brana dreta
+	{ vec3(10,  6,  79),   vec3(30, 8.7, 131), Orange },												//barana esquerra
 	
 //External Walls
 	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), White , false, true},							//Wall 1
@@ -31,7 +39,7 @@ CubeDef cube_defs[] = {
 //internal Walls
 
 	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), Orange },										//Wall 6
-	{ vec3( 80, 10,  10),   vec3(   65,   0,  50), Orange },										//Wall 7
+	{ vec3( 90, 10,  17),   vec3(   70,   0,  50), Orange },										//Wall 7
 	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), Orange },										//Wall 9
 	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), Orange },										//Wall 10
 	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), Orange },										//Wall 12 					   
