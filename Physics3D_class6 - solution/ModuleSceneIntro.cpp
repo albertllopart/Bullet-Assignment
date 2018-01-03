@@ -26,24 +26,24 @@ CubeDef cube_defs[] = {
 	{ vec3(10,  15,  50),    vec3(    -15,     2,   194), Orange, false, false, 10, vec3(1, 0, 0) },        //barana dreta
 	{ vec3(10,  15,  50),    vec3(    30,      2,    194), Orange, false, false, 10, vec3(1, 0, 0) },       //barana esquerra
 
-	{ vec3( 35,  2,  79),   vec3(    7.5, 5.3, 131), Orange },											    //Pont
+	/*{ vec3( 35,  2,  79),   vec3(    7.5, 5.3, 131), Orange },											    //Pont
 	{ vec3(10,  8,  79),    vec3(    -15, 9.7, 131), Orange },												//brana dreta
-	{ vec3(10,  8,  79),    vec3(    30,  9.7, 131), Orange },												//barana esquerra
+	{ vec3(10,  8,  79),    vec3(    30,  9.7, 131), Orange },	*/											//barana esquerra
 	
 //External Walls
-	{ vec3(310, 80,  20),   vec3(    0,   0,  -5), White , false, true},							//Wall 1
+	{ vec3(280, 80,  20),   vec3(    0,   0,  -5), White , false, true},							//Wall 1
 	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), White , false, true},							//Wall 2
 	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), White , false, true},							//Wall 3
 	{ vec3(310, 80,  20),   vec3(    0,   0, 305), White , false, true},							//Wall 4
 						  	     		  		 		 
 //internal Walls
 
-	{ vec3( 10, 10, 220),   vec3(  110,   0, 155), Orange },										//Wall 6
-	{ vec3( 90, 10,  17),   vec3(   70,   0,  50), Orange },										//Wall 7
+	{ vec3( 10, 10, 165),   vec3(  110,   0, 175), Orange },										//Wall 6
+	{ vec3( 90, 10,  52),   vec3(   70,   0,  67), Orange },										//Wall 7
 	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), Orange },										//Wall 9
 	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), Orange },										//Wall 10
-	{ vec3(105, 10,  55),   vec3(-62.5,   0, 235), Orange },										//Wall 12 					   
-	{ vec3( 55, 10, 175),   vec3(-87.5,   0, 120), Orange },										//Wall 14
+	{ vec3(105, 10,  93),   vec3(-62.5,   0, 216), Orange },										//Wall 12 					   
+	{ vec3( 55, 10, 137),   vec3(-87.5,   0, 101), Orange },										//Wall 14
 
 //Sensors
 
