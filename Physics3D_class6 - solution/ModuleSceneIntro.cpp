@@ -45,6 +45,11 @@ CubeDef cube_defs[] = {
 	{ vec3(105, 10,  93),   vec3(-62.5,   0, 216), Orange },										//Wall 12 					   
 	{ vec3( 55, 10, 137),   vec3(-87.5,   0, 101), Orange },										//Wall 14
 
+//hazards
+
+	{ vec3(55,  10,   1),	vec3(70,      0,  220), Blue},
+	{ vec3(30,  10,   1),	vec3(-40,     0,  90), Blue },
+
 //Sensors
 
 	{ vec3( 70,  5,   1),	vec3(    70,   0,  180), Blue, true},									//sens1
