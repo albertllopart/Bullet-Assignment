@@ -66,6 +66,7 @@ bool ModuleSceneIntro::Start()
 	LOG("Loading Intro assets");
 	bool ret = true;
 
+	App->audio->LoadFx("Sounds/finish_lap.wav");//1
 	App->audio->PlayMusic("Sounds/Intro.ogg");
 
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
@@ -124,6 +125,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 				best_time = timer_laps.ReadSec();
 			timer_laps.Start();
 			laps++;
+			App->audio->PlayFx(1);
 			if (laps == 3) {
 				WantToStart = false;
 				App->audio->PlayMusic("Sounds/Intro.ogg");

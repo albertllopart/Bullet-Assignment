@@ -72,6 +72,8 @@ bool ModuleAudio::CleanUp()
 bool ModuleAudio::PlayMusic(const char* path, float fade_time)
 {
 	bool ret = true;
+
+	Mix_VolumeMusic(5);
 	
 	if(music != NULL)
 	{
