@@ -20,14 +20,14 @@ public:
 	void SetPos(float x, float y, float z);
 	void SetAsSensor(bool is_sensor);
 	bool IsSensor() const;
-	btRigidBody* GetBody() const;
+
 
 private:
-	btRigidBody* body = nullptr;
 	bool is_sensor = false;
 
 public:
 	p2List<Module*> collision_listeners;
+	btRigidBody* body = nullptr;
 };
 
 #endif // __PhysBody3D_H__

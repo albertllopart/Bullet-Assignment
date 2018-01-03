@@ -53,11 +53,11 @@ CubeDef cube_defs[] = {
 
 //Sensors
 
-	{ vec3( 70,  5,   1),	vec3(    70,   0,  150), Blue, true},									//sens1
+	{ vec3( 70,  5,   1),	vec3(    70,   0,  173), Blue, true},									//sens1
 	{ vec3( 40,  5,   1),	vec3(5,   0,  50), Blue, true},											//sens2
 	{ vec3( 40,  5,   1),	vec3(-130,   0,  50), Blue, true},										//sens3
 
-	{ vec3(70,  5,   1),	vec3(70,   0,  150), Blue, false, false, true },
+	{ vec3(70,  0.1,   10),	vec3(70,   0,  173), Blue, false, false, true },
 
 };
 
@@ -174,8 +174,8 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hid
 			App->physics->AddBody(c, 0.0f);
 		else if (hazards) {
 			cube_rot = App->physics->AddBody(c, 100000);
-			cylinder->GetBody()->setAngularFactor(btVector3(0, 0, 0));
-			cube_rot->GetBody()->setLinearFactor(btVector3(0, 0, 0));
+			cylinder->body->setAngularFactor(btVector3(0, 0, 0));
+			cube_rot->body->setLinearFactor(btVector3(0, 0, 0));
 			App->physics->AddConstraintHinge(*cylinder, *cube_rot, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 0, 0), vec3(0, 0, 0), true);
 		}
 		cube.add(c);
