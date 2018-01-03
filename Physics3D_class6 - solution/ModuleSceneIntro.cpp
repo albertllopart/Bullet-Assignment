@@ -13,18 +13,19 @@ struct CubeDef {
 	Color color;
 	bool sens;
 	bool hide;
+	bool proceed;
 	int  incl_ang;
 	vec3 incl_axis;
 };
 
-CubeDef cube_defs[] = {
-	{ vec3( 35,  15,  50),   vec3(    7.5,	  -5.3,  69), Orange, false, false, -10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 10,  15,  50),   vec3(   -15,      2,    68), Orange, false, false, -10, vec3(1, 0, 0) },       //barana dreta
-	{ vec3(10,  15,  50),    vec3(    30,      2,    68), Orange, false, false, -10, vec3(1, 0, 0) },       //barana esquerra
-
-	{ vec3( 35,  15,  50),   vec3(    7.5,   -5.4,   193), Orange, false, false,  10, vec3(1, 0, 0) },		//Rampa
-	{ vec3(10,  15,  50),    vec3(    -15,     2,   194), Orange, false, false, 10, vec3(1, 0, 0) },        //barana dreta
-	{ vec3(10,  15,  50),    vec3(    30,      2,    194), Orange, false, false, 10, vec3(1, 0, 0) },       //barana esquerra
+CubeDef cube_defs[] = {				    
+	{ vec3( 35,  15,  50),   vec3( 7.5,-5.3,  69), Orange, false, false, false, -10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 10,  15,  50),   vec3( -15,   2,  68), Orange, false, false, false, -10, vec3(1, 0, 0) },       //barana dreta
+	{ vec3(10,  15,  50),    vec3(  30,   2,  68), Orange, false, false, false, -10, vec3(1, 0, 0) },       //barana esquerra
+									    
+	{ vec3(35,  15,  50),    vec3( 7.5,-5.4, 193), Orange, false, false, false, 10, vec3(1, 0, 0)},		//Rampa
+	{ vec3(10,  15,  50),    vec3( -15,   2, 194), Orange, false, false, false, 10, vec3(1, 0, 0) },        //barana dreta
+	{ vec3(10,  15,  50),    vec3(  30,   2, 194), Orange, false, false, false, 10, vec3(1, 0, 0) },       //barana esquerra
 
 	/*{ vec3( 35,  2,  79),   vec3(    7.5, 5.3, 131), Orange },											    //Pont
 	{ vec3(10,  8,  79),    vec3(    -15, 9.7, 131), Orange },												//brana dreta
@@ -52,9 +53,11 @@ CubeDef cube_defs[] = {
 
 //Sensors
 
-	{ vec3( 70,  5,   1),	vec3(    70,   0,  180), Blue, true},									//sens1
+	{ vec3( 70,  5,   1),	vec3(    70,   0,  150), Blue, true},									//sens1
 	{ vec3( 40,  5,   1),	vec3(5,   0,  50), Blue, true},											//sens2
 	{ vec3( 40,  5,   1),	vec3(-130,   0,  50), Blue, true},										//sens3
+
+	{ vec3(70,  5,   1),	vec3(70,   0,  150), Blue, false, false, true },
 
 };
 
@@ -78,7 +81,7 @@ bool ModuleSceneIntro::Start()
 	App->camera->LookAt(vec3(0, 0, 0));
 
 	for (int i = 0; i < SIZE_ARRAY(cube_defs); i++)
-		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].sens, cube_defs[i].hide, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
+		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].sens, cube_defs[i].hide, cube_defs[i].proceed, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
 
 
 	return ret;
@@ -150,7 +153,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 }
 
-void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hide, int rot, vec3 vecRot, Color color) {
+void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hide, bool proceed, int rot, vec3 vecRot, Color color) {
 
 	Cube c(dimensions.x, dimensions.y, dimensions.z) ;
 	c.SetPos(pos.x, pos.y, pos.z);
@@ -159,10 +162,11 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hid
 			c.SetRotation(rot, vecRot);
 		c.color = color;
 		c.wire = hide;
-		App->physics->AddBody(c, 0);
+		if(!proceed)
+			App->physics->AddBody(c, 0);
 		cube.add(c);
 	}
-	if(sens)
+	else if(sens)
 		AddSensor(c);
 }
 
