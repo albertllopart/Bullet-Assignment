@@ -47,9 +47,9 @@ CubeDef cube_defs[] = {
 
 //Sensors
 
-	{ vec3( 40,  5,   1),	vec3(    7,   0,  50), Orange, true},									//sens1
-	{ vec3( 40,  5,   1),	vec3( -130,   0,  50), Orange, true},									//sens2
-	{ vec3( 40,  5,   1),	vec3(  130,   0,  50), Orange, true},									//sens3
+	{ vec3( 70,  5,   1),	vec3(    70,   0,  180), Blue, true},									//sens1
+	{ vec3( 40,  5,   1),	vec3(5,   0,  50), Blue, true},											//sens2
+	{ vec3( 40,  5,   1),	vec3(-130,   0,  50), Blue, true},										//sens3
 
 };
 

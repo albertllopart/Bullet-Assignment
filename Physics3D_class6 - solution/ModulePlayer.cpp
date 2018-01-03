@@ -66,7 +66,7 @@ bool ModulePlayer::Start()
 	float half_width = car.chassis_size.x*0.5f;
 	float half_length = car.chassis_size.z*0.5f;
 	
-	vec3 direction(0,-1,0);
+	vec3 direction(0,-1, 0);
 	vec3 axis(-1,0,0);
 	
 	car.num_wheels = 4;
@@ -121,7 +121,8 @@ bool ModulePlayer::Start()
 	car.wheels[3].steering = false;
 
 	vehicle = App->physics->AddVehicle(car);
-	vehicle->SetPos(0, 0, 20);
+	vehicle->SetPos(75, 0, 160
+	);
 
 	return true;
 }
