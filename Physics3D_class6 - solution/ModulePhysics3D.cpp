@@ -139,6 +139,8 @@ update_status ModulePhysics3D::Update(float dt)
 
 	if (time.ReadSec() == 1)
 		hinge->setMotorTargetVelocity(0);
+
+	hinge->setAxis(btVector3(1,0,0));
 	return UPDATE_CONTINUE;
 }
 
@@ -345,7 +347,7 @@ void ModulePhysics3D::AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, con
 	p2p->setDbgDrawSize(2.0f);
 }
 
-void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisA, const vec3& axisB, bool disable_collision)
+void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisA, const vec3& axisB, float force, bool disable_collision)
 {
 	hinge = new btHingeConstraint(
 		*(bodyA.body), 
@@ -355,7 +357,7 @@ void ModulePhysics3D::AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, c
 		btVector3(axisA.x, axisA.y, axisA.z), 
 		btVector3(axisB.x, axisB.y, axisB.z));
 
-	hinge->enableAngularMotor(true, 80000.0f, INFINITE);
+	hinge->enableAngularMotor(true, force, INFINITE);
 	
 	world->addConstraint(hinge, disable_collision);
 	constraints.add(hinge);

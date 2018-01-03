@@ -84,7 +84,7 @@ bool ModuleSceneIntro::Start()
 	cy.radius = 1;
 	cy.height = 10;
 	cy.SetRotation(90, { 0,0,1 });
-	cy.SetPos(-40, 0, 90);
+	cy.SetPos(-40, 10, 90);
 	cylinder = App->physics->AddBody(cy);
 
 
@@ -176,7 +176,7 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hid
 			cube_rot = App->physics->AddBody(c, 100000);
 			cylinder->body->setAngularFactor(btVector3(0, 0, 0));
 			cube_rot->body->setLinearFactor(btVector3(0, 0, 0));
-			App->physics->AddConstraintHinge(*cylinder, *cube_rot, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 0, 0), vec3(0, 0, 0), true);
+			App->physics->AddConstraintHinge(*cylinder, *cube_rot, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 0, 0), vec3(0, 0, 0), 80000.0f, true);
 		}
 		cube.add(c);
 	}
