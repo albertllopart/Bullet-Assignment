@@ -49,7 +49,7 @@ CubeDef cube_defs[] = {
 
 //hazards
 
-	{ vec3(30,  5,   1),	vec3(-40,    3,  90), Blue, false, false, false, true},
+	{ vec3(30,  6,   1),	vec3(-40,    1,  90), Blue, false, false, false, true},
 
 //Sensors
 
