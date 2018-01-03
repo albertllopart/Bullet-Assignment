@@ -8,6 +8,7 @@
 
 struct PhysBody3D;
 struct PhysMotor3D;
+struct Primitive;
 
 class ModuleSceneIntro : public Module
 {
@@ -21,13 +22,14 @@ public:
 
 	void OnCollision(PhysBody3D* body1, PhysBody3D* body2);
 
-	void CreateCube(vec3 dimensions, vec3 pos, bool sens = false, bool hide = false, bool proceed = false, int rot = 0, vec3 vecRot = { 0,0,0 },Color color = White);
+	void CreateCube(vec3 dimensions, vec3 pos, bool sens = false, bool hide = false, bool proceed = false, bool hazards = false, int rot = 0, vec3 vecRot = { 0,0,0 },Color color = White);
 	void DrawMap();
 	void AddSensor(Cube c);
 	void PreviousWire();
 
 public:
-	Cube s1;
+	PhysBody3D* cylinder;
+	PhysBody3D* cube_rot;
 	p2List<PhysBody3D*> sens;
 	p2List<Cube> cube;
 

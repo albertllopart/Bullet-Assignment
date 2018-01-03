@@ -14,6 +14,8 @@ struct PhysBody3D;
 struct PhysVehicle3D;
 struct VehicleInfo;
 
+
+
 class ModulePhysics3D : public Module
 {
 public:
@@ -35,6 +37,7 @@ public:
 	void AddConstraintP2P(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB);
 	void AddConstraintHinge(PhysBody3D& bodyA, PhysBody3D& bodyB, const vec3& anchorA, const vec3& anchorB, const vec3& axisS, const vec3& axisB, bool disable_collision = false);
 
+
 private:
 
 	bool debug;
@@ -46,6 +49,9 @@ private:
 	btDiscreteDynamicsWorld*			world;
 	btDefaultVehicleRaycaster*			vehicle_raycaster;
 	DebugDrawer*						debug_draw;
+
+	btHingeConstraint*					hinge;
+	Timer								time;
 
 	p2List<btCollisionShape*> shapes;
 	p2List<PhysBody3D*> bodies;

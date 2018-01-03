@@ -14,18 +14,19 @@ struct CubeDef {
 	bool sens;
 	bool hide;
 	bool proceed;
+	bool hazards;
 	int  incl_ang;
 	vec3 incl_axis;
 };
 
 CubeDef cube_defs[] = {				    
-	{ vec3( 35,  15,  50),   vec3( 7.5,-5.3,  69), Orange, false, false, false, -10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 10,  15,  50),   vec3( -15,   2,  68), Orange, false, false, false, -10, vec3(1, 0, 0) },       //barana dreta
-	{ vec3(10,  15,  50),    vec3(  30,   2,  68), Orange, false, false, false, -10, vec3(1, 0, 0) },       //barana esquerra
+	{ vec3( 35,  15,  50),   vec3( 7.5,-5.3,  69), Orange, false, false, false, false, -10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 10,  15,  50),   vec3( -15,   2,  68), Orange, false, false, false, false, -10, vec3(1, 0, 0) },       //barana dreta
+	{ vec3(10,  15,  50),    vec3(  30,   2,  68), Orange, false, false, false, false, -10, vec3(1, 0, 0) },       //barana esquerra
 									    
-	{ vec3(35,  15,  50),    vec3( 7.5,-5.4, 193), Orange, false, false, false, 10, vec3(1, 0, 0)},		//Rampa
-	{ vec3(10,  15,  50),    vec3( -15,   2, 194), Orange, false, false, false, 10, vec3(1, 0, 0) },        //barana dreta
-	{ vec3(10,  15,  50),    vec3(  30,   2, 194), Orange, false, false, false, 10, vec3(1, 0, 0) },       //barana esquerra
+	{ vec3(35,  15,  50),    vec3( 7.5,-5.4, 193), Orange, false, false, false, false, 10, vec3(1, 0, 0)},		//Rampa
+	{ vec3(10,  15,  50),    vec3( -15,   2, 194), Orange, false, false, false, false, 10, vec3(1, 0, 0)},        //barana dreta
+	{ vec3(10,  15,  50),    vec3(  30,   2, 194), Orange, false, false, false, false, 10, vec3(1, 0, 0)},       //barana esquerra
 
 	/*{ vec3( 35,  2,  79),   vec3(    7.5, 5.3, 131), Orange },											    //Pont
 	{ vec3(10,  8,  79),    vec3(    -15, 9.7, 131), Orange },												//brana dreta
@@ -48,8 +49,7 @@ CubeDef cube_defs[] = {
 
 //hazards
 
-	{ vec3(55,  10,   1),	vec3(70,      0,  220), Blue},
-	{ vec3(30,  10,   1),	vec3(-40,     0,  90), Blue },
+	{ vec3(30,  5,   1),	vec3(-40,    3,  90), Blue, false, false, false, true},
 
 //Sensors
 
@@ -80,8 +80,16 @@ bool ModuleSceneIntro::Start()
 	App->camera->Move(vec3(1.0f, 1.0f, 0.0f));
 	App->camera->LookAt(vec3(0, 0, 0));
 
+	Cylinder cy;
+	cy.radius = 1;
+	cy.height = 10;
+	cy.SetRotation(90, { 0,0,1 });
+	cy.SetPos(-40, 0, 90);
+	cylinder = App->physics->AddBody(cy);
+
+
 	for (int i = 0; i < SIZE_ARRAY(cube_defs); i++)
-		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].sens, cube_defs[i].hide, cube_defs[i].proceed, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
+		CreateCube(cube_defs[i].dim, cube_defs[i].pos, cube_defs[i].sens, cube_defs[i].hide, cube_defs[i].proceed, cube_defs[i].hazards, cube_defs[i].incl_ang, cube_defs[i].incl_axis,cube_defs[i].color);
 
 
 	return ret;
@@ -153,7 +161,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 
 }
 
-void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hide, bool proceed, int rot, vec3 vecRot, Color color) {
+void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hide, bool proceed, bool hazards, int rot, vec3 vecRot, Color color) {
 
 	Cube c(dimensions.x, dimensions.y, dimensions.z) ;
 	c.SetPos(pos.x, pos.y, pos.z);
@@ -162,8 +170,14 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hid
 			c.SetRotation(rot, vecRot);
 		c.color = color;
 		c.wire = hide;
-		if(!proceed)
-			App->physics->AddBody(c, 0);
+		if(!proceed && !hazards)
+			App->physics->AddBody(c, 0.0f);
+		else if (hazards) {
+			cube_rot = App->physics->AddBody(c, 100000);
+			cylinder->GetBody()->setAngularFactor(btVector3(0, 0, 0));
+			cube_rot->GetBody()->setLinearFactor(btVector3(0, 0, 0));
+			App->physics->AddConstraintHinge(*cylinder, *cube_rot, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 0, 0), vec3(0, 0, 0), true);
+		}
 		cube.add(c);
 	}
 	else if(sens)
@@ -171,8 +185,12 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hid
 }
 
 void ModuleSceneIntro::DrawMap() {
-	for (p2List_item<Cube>* iter = cube.getFirst(); iter; iter = iter->next)
-			iter->data.Render();
+	p2List_item<Cube>* iter = cube.getFirst();
+	for (int i = 0; iter; iter = iter->next, i++) {
+		if (cube_defs[i].hazards)
+			cube_rot->GetTransform(&iter->data.transform);
+		iter->data.Render();
+	}
 }
 
 void ModuleSceneIntro::AddSensor(Cube c){
@@ -185,7 +203,7 @@ void ModuleSceneIntro::AddSensor(Cube c){
 }
 
 void ModuleSceneIntro::PreviousWire() {
-	p2List_item<Cube>* iter = App->scene_intro->cube.getFirst();
+	p2List_item<Cube>* iter = cube.getFirst();
 	for (int i = 0; iter; i++, iter = iter->next) {
 		iter->data.wire = cube_defs[i].hide;
 
