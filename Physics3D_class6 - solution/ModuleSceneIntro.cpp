@@ -49,7 +49,15 @@ CubeDef cube_defs[] = {
 
 //hazards
 
-	{ vec3(30,  6,   1),	vec3(-40,    1,  90), Blue, false, false, false, true},
+	{ vec3(30,  6,   1),	vec3(-40,    1,  90), White, false, false, false, true},
+	{ vec3(34,  10,   1),	vec3(88,   0,  257),  White },
+	{ vec3(34,  10,   1),	vec3(52,   0,  215),  White },
+	{ vec3(11,  10,   1),	vec3(-121,   0,  60),  White },
+	{ vec3(11,  10,   1),	vec3(-121,   0,  140),  White },
+	{ vec3(11,  10,   1),	vec3(-121,   0,  220),  White },
+	{ vec3(11,  10,   1),	vec3(-135,   0,  100),  White },
+	{ vec3(11,  10,   1),	vec3(-135,   0,  180),  White },
+	{ vec3(11,  10,   1),	vec3(-135,   0,  260),  White },
 
 //Sensors
 
