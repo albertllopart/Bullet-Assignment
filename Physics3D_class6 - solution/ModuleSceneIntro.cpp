@@ -59,7 +59,7 @@ CubeDef cube_defs[] = {
 //Sensors		 				   		  
 				 				   		  
 	{ vec3( 70,   5,   1),	vec3(    70,    0, 173),   Blue, true},													//sens1
-	{ vec3( 40,   5,   1),	vec3(     5,    0,  50),   Blue, true},													//sens2
+	{ vec3(  1,   5,  40),	vec3(   -10,    0, 280),   Blue, true},													//sens2
 	{ vec3( 40,   5,   1),	vec3(  -130,    0,  50),   Blue, true},													//sens3
 								   		  
 	{ vec3( 70, 0.1,  10),	vec3(    70,    0, 173),   Blue, false, false, true },
@@ -164,6 +164,7 @@ void ModuleSceneIntro::OnCollision(PhysBody3D* body1, PhysBody3D* body2)
 	else if (body1 == sens_list->next->data && started && half_lap)
 		last_sensor = true;	
 
+	App->player->vehicle->GetTransform(App->player->reset);
 }
 
 void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hide, bool proceed, bool hazards, int rot, vec3 vecRot, Color color) {
@@ -185,7 +186,7 @@ void ModuleSceneIntro::CreateCube(vec3 dimensions, vec3 pos, bool sens, bool hid
 		}
 		cube.add(c);
 	}
-	else if(sens)
+	else if (sens) 
 		AddSensor(c);
 }
 
