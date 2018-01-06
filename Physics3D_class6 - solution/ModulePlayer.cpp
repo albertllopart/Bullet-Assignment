@@ -122,7 +122,7 @@ bool ModulePlayer::Start()
 
 	vehicle = App->physics->AddVehicle(car);
 	vehicle->SetPos(65, 0, 140);
-
+	vehicle->GetTransform(reset);
 	return true;
 }
 
