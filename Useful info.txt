@@ -1,5 +1,0 @@
-mat4x4 m;
-
-pb->Gettransform(&m); retorna totes les dades del 'pb' i les guarda a 'm'
-
-m.translation(); retorna un vector amb la posició.
