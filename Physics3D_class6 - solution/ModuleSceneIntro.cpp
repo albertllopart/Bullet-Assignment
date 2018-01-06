@@ -20,54 +20,51 @@ struct CubeDef {
 };
 
 CubeDef cube_defs[] = {				    
-	{ vec3( 35,  15,  50),   vec3( 7.5,-5.3,  69), Orange, false, false, false, false, -10, vec3(1, 0, 0) },		//Rampa
-	{ vec3( 10,  15,  50),   vec3( -15,   2,  68), Orange, false, false, false, false, -10, vec3(1, 0, 0) },       //barana dreta
-	{ vec3(10,  15,  50),    vec3(  30,   2,  68), Orange, false, false, false, false, -10, vec3(1, 0, 0) },       //barana esquerra
+	{ vec3( 35,  15,  50),   vec3(  7.5, -5.3,  69), Orange, false, false, false, false, -10, vec3(1, 0, 0) },		//Rampa
+	{ vec3( 10,  15,  50),   vec3(  -15,    2,  68), Orange, false, false, false, false, -10, vec3(1, 0, 0) },      //barana dreta
+	{ vec3( 10,  15,  50),    vec3(  30,    2,  68), Orange, false, false, false, false, -10, vec3(1, 0, 0) },      //barana esquerra
 									    
-	{ vec3(35,  15,  50),    vec3( 7.5,-5.4, 193), Orange, false, false, false, false, 10, vec3(1, 0, 0)},		//Rampa
-	{ vec3(10,  15,  50),    vec3( -15,   2, 194), Orange, false, false, false, false, 10, vec3(1, 0, 0)},        //barana dreta
-	{ vec3(10,  15,  50),    vec3(  30,   2, 194), Orange, false, false, false, false, 10, vec3(1, 0, 0)},       //barana esquerra
-
-	/*{ vec3( 35,  2,  79),   vec3(    7.5, 5.3, 131), Orange },											    //Pont
-	{ vec3(10,  8,  79),    vec3(    -15, 9.7, 131), Orange },												//brana dreta
-	{ vec3(10,  8,  79),    vec3(    30,  9.7, 131), Orange },	*/											//barana esquerra
-	
-//External Walls
-	{ vec3(280, 80,  20),   vec3(    0,   0,  -5), White , false, true},							//Wall 1
-	{ vec3( 20, 80, 300),   vec3( -150,   0, 155), White , false, true},							//Wall 2
-	{ vec3( 20, 80, 300),   vec3(  150,   0, 155), White , false, true},							//Wall 3
-	{ vec3(310, 80,  20),   vec3(    0,   0, 305), White , false, true},							//Wall 4
-						  	     		  		 		 
-//internal Walls
-
-	{ vec3( 10, 10, 165),   vec3(  110,   0, 175), Orange },										//Wall 6
-	{ vec3( 90, 10,  52),   vec3(   70,   0,  67), Orange },										//Wall 7
-	{ vec3( 10, 10,  50),   vec3(  -15,   0,  30), Orange },										//Wall 9
-	{ vec3( 10, 10, 100),   vec3(   30,   0, 255), Orange },										//Wall 10
-	{ vec3(105, 10,  93),   vec3(-62.5,   0, 216), Orange },										//Wall 12 					   
-	{ vec3( 55, 10, 137),   vec3(-87.5,   0, 101), Orange },										//Wall 14
-
-//hazards
-
-	{ vec3(30,  6,   1),	vec3(-40,    1,  90), White, false, false, false, true},
-	{ vec3(34,  10,   1),	vec3(88,   0,  257),  White },
-	{ vec3(34,  10,   1),	vec3(52,   0,  215),  White },
-	{ vec3(11,  10,   1),	vec3(-121,   0,  60),  White },
-	{ vec3(11,  10,   1),	vec3(-121,   0,  140),  White },
-	{ vec3(11,  10,   1),	vec3(-121,   0,  220),  White },
-	{ vec3(11,  10,   1),	vec3(-135,   0,  100),  White },
-	{ vec3(11,  10,   1),	vec3(-135,   0,  180),  White },
-	{ vec3(11,  10,   1),	vec3(-135,   0,  260),  White },
-
-//Sensors
-
-	{ vec3( 70,  5,   1),	vec3(    70,   0,  173), Blue, true},									//sens1
-	{ vec3( 40,  5,   1),	vec3(5,   0,  50), Blue, true},											//sens2
-	{ vec3( 40,  5,   1),	vec3(-130,   0,  50), Blue, true},										//sens3
-
-	{ vec3(70,  0.1,   10),	vec3(70,   0,  173), Blue, false, false, true },
-
-};
+	{ vec3( 35,  15,  50),    vec3( 7.5, -5.4, 193), Orange, false, false, false, false, 10, vec3(1, 0, 0)},		//Rampa
+	{ vec3( 10,  15,  50),    vec3( -15,    2, 194), Orange, false, false, false, false, 10, vec3(1, 0, 0)},        //barana dreta
+	{ vec3( 10,  15,  50),    vec3(  30,    2, 194), Orange, false, false, false, false, 10, vec3(1, 0, 0)},        //barana esquerra
+				 
+				 
+//External Walls 
+	{ vec3(280,  80,  20),   vec3(    0,    0,  -5),  White, false, true},											//Wall 1
+	{ vec3( 20,  80, 300),   vec3( -150,    0, 155),  White, false, true},											//Wall 2
+	{ vec3( 20,  80, 300),   vec3(  150,    0, 155),  White, false, true},											//Wall 3
+	{ vec3(310,  80,  20),   vec3(    0,    0, 305),  White, false, true},											//Wall 4
+				 		  	     		   		 		 
+//internal Walls 						   
+				 						   
+	{ vec3( 10,  10, 165),   vec3(  110,    0, 175), Orange },														//Wall 6
+	{ vec3( 90,  10,  52),   vec3(   70,    0,  67), Orange },														//Wall 7
+	{ vec3( 10,  10,  50),   vec3(  -15,    0,  30), Orange },														//Wall 9
+	{ vec3( 10,  10, 100),   vec3(   30,    0, 255), Orange },														//Wall 10
+	{ vec3(105,  10,  93),   vec3(-62.5,    0, 216), Orange },														//Wall 12 					   
+	{ vec3( 55,  10, 137),   vec3(-87.5,    0, 101), Orange },														//Wall 14
+				 
+//hazards		 
+				 
+	{ vec3( 30,   6,   1),	vec3(   -40,    1,  90),  Green, false, false, false, true},
+	{ vec3( 34,  10,   1),	vec3(    88,    0, 257),  Green },
+	{ vec3( 34,  10,   1),	vec3(    52,    0, 215),  Green },
+	{ vec3( 11,  10,   1),	vec3(  -121,    0,  60),  Green },
+	{ vec3( 11,  10,   1),	vec3(  -121,    0, 140),  Green },
+	{ vec3( 11,  10,   1),	vec3(  -121,    0, 220),  Green },
+	{ vec3( 11,  10,   1),	vec3(  -135,    0, 100),  Green },
+	{ vec3( 11,  10,   1),	vec3(  -135,    0, 180),  Green },
+	{ vec3( 11,  10,   1),	vec3(  -135,    0, 260),  Green },
+				 				   		  
+//Sensors		 				   		  
+				 				   		  
+	{ vec3( 70,   5,   1),	vec3(    70,    0, 173),   Blue, true},													//sens1
+	{ vec3( 40,   5,   1),	vec3(     5,    0,  50),   Blue, true},													//sens2
+	{ vec3( 40,   5,   1),	vec3(  -130,    0,  50),   Blue, true},													//sens3
+								   		  
+	{ vec3( 70, 0.1,  10),	vec3(    70,    0, 173),   Blue, false, false, true },
+								   		  
+};										  
 
 ModuleSceneIntro::ModuleSceneIntro(Application* app, bool start_enabled) : Module(app, start_enabled)
 {
